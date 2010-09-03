@@ -8,14 +8,29 @@
 
 #import <Foundation/Foundation.h>
 
+@protocol JLTNotificationDelegate
+@required
+- (void)gotDeviceToken:(id)token;
+@end
+
 
 @interface JLTNotification : NSObject {
+	id		delegate;
+	
 	int		badgeNumber;
+	id		devTokenBytes;
+	BOOL	remoteRegistered;
 }
+
+@property (nonatomic, assign) id delegate;
 
 // Configuration and accessor methods
 - (void)setBadgeNumber:(int)num;
 - (void)clearBadge;
 - (int)badgeNumber;
+- (id)devTokenBytes;
+- (BOOL)remoteRegistered;
 
+- (UILocalNotification *)localNotificationWithMessage:(NSString *)message andAction:(NSString *)action;
+- (void)registerForRemoteNotifications;
 @end

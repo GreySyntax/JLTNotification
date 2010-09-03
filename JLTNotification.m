@@ -11,6 +11,7 @@
 
 @implementation JLTNotification
 
+@synthesize delegate;
 
 - (void)setBadgeNumber:(int)num {
 	badgeNumber = num;
@@ -23,6 +24,40 @@
 
 - (int)badgeNumber {
 	return badgeNumber;
+}
+
+- (UILocalNotification *)localNotificationWithMessage:(NSString *)message andAction:(NSString *)action {
+	UILocalNotification *notif = [[UILocalNotification alloc] init];
+	if (notif == nil) {
+		return 0;
+	}
+	notif.alertBody = [NSString stringWithFormat:NSLocalizedString(@"%@", nil), message];
+	notif.alertAction = [NSString stringWithFormat:NSLocalizedString(@"%@", nil), action];
+	notif.soundName = UILocalNotificationDefaultSoundName;
+	
+	return notif;
+}
+
+- (id)devTokenBytes {
+	return devTokenBytes;
+}
+
+- (BOOL)remoteRegistered {
+	return remoteRegistered;
+}
+
+- (void)registerForRemoteNotifications {
+	[[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound];
+}
+
+- (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)devToken {
+	devTokenBytes = [devToken bytes];
+	remoteRegistered = YES;
+	[self.delegate gotDeviceToken:devTokenBytes];
+}
+
+- (void)application:(UIApplication *)app didFailToRegisterForRemoteNotificationsWithError:(NSError *)err {
+    NSLog(@"JLTNotification: Unable to register for remote notifications: %@", err);
 }
 
 @end
