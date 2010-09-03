@@ -13,6 +13,8 @@
 
 @synthesize delegate;
 
+#pragma mark Configuration and accessor methods
+
 - (void)setBadgeNumber:(int)num {
 	badgeNumber = num;
 	[[UIApplication sharedApplication] setApplicationIconBadgeNumber:num];
@@ -26,6 +28,16 @@
 	return badgeNumber;
 }
 
+- (id)devTokenBytes {
+	return devTokenBytes;
+}
+
+- (BOOL)remoteRegistered {
+	return remoteRegistered;
+}
+
+#pragma mark Notification Methods
+
 - (UILocalNotification *)localNotificationWithMessage:(NSString *)message andAction:(NSString *)action {
 	UILocalNotification *notif = [[UILocalNotification alloc] init];
 	if (notif == nil) {
@@ -36,14 +48,6 @@
 	notif.soundName = UILocalNotificationDefaultSoundName;
 	
 	return notif;
-}
-
-- (id)devTokenBytes {
-	return devTokenBytes;
-}
-
-- (BOOL)remoteRegistered {
-	return remoteRegistered;
 }
 
 - (void)registerForRemoteNotifications {
