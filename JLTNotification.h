@@ -10,14 +10,15 @@
 
 @protocol JLTNotificationDelegate
 @required
-- (void)gotDeviceToken:(id)token;
+- (void)gotDeviceToken:(NSData *)token;
 @end
 
 @interface JLTNotification : NSObject {
+	// Used to send data back to user of instance
 	id		delegate;
 	
 	int		badgeNumber;
-	id		devTokenBytes;
+	NSData	*deviceToken;
 	BOOL	remoteRegistered;
 }
 
@@ -29,7 +30,7 @@
 - (void)setBadgeNumber:(int)num;
 - (void)clearBadge;
 - (int)badgeNumber;
-- (id)devTokenBytes;
+- (NSData *)deviceToken;
 - (BOOL)remoteRegistered;
 
 #pragma mark Notification Methods

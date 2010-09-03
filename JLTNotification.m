@@ -28,8 +28,8 @@
 	return badgeNumber;
 }
 
-- (id)devTokenBytes {
-	return devTokenBytes;
+- (NSData *)deviceToken {
+	return deviceToken;
 }
 
 - (BOOL)remoteRegistered {
@@ -55,9 +55,9 @@
 }
 
 - (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)devToken {
-	devTokenBytes = [devToken bytes];
+	deviceToken = devToken;
 	remoteRegistered = YES;
-	[self.delegate gotDeviceToken:devTokenBytes];
+	[self.delegate gotDeviceToken:devToken];
 }
 
 - (void)application:(UIApplication *)app didFailToRegisterForRemoteNotificationsWithError:(NSError *)err {
